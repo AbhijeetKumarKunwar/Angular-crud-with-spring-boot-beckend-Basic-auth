@@ -1,0 +1,215 @@
+--------------------------------------------------------------------------------TypeScript----------------------------------
+					TypeScript
+JavaScript was introduced as a language for the client side. The development of Node.js has marked JavaScript as an emerging server-side technology too. However, as JavaScript code grows, it tends to get messier, making it difficult to maintain and reuse the code. Moreover, its failure to embrace the features of Object Orientation, strong type checking and compile-time error checks prevents JavaScript from succeeding at the enterprise level as a full-fledged server-side technology. TypeScript was presented to bridge this gap.
+
+What is TypeScript?
+By definition, “TypeScript is JavaScript for application-scale development.”
+
+TypeScript is a strongly typed, object oriented, compiled language. It was designed by Anders Hejlsberg (designer of C#) at Microsoft.
+ TypeScript is both a language and a set of tools. TypeScript is a typed superset of JavaScript compiled to JavaScript. In other words, 
+TypeScript is JavaScript plus some additional features
+It is the super set of the Java script so, any valid js code is valid for the ts.It is having special feature which is not their in js.
+it -
+Strong type-(define data type but her is optional)
+Ops-class, interfaces,access modifier etc are missing in js
+Copile time error
+Great tooling
+
+Browser does't understand ts , so it is transpile to js by compiler.
+
+Install Typescript-
+npm install -g typescript
+
+tsc --version - typescript compiler version.
+create a folder -mkdir folder-name
+go to folder-cd folder-name
+create file and open in vs-->code main.ts(It will open main.ts or create if not present)
+
+when we run ng serve , it will autometically call the tsc compiler for transpile.
+
+-----------------------------------This is the plane js code--------------------
+function log(message)
+{
+    console.log(message);
+}
+var message="abi";
+log(message);
+Transpile this js to ts-
+>>tsc main.ts
+check the files in the folder-
+ if pass command--> code main.js than js file created will opened in the vs code.
+>>ls
+we will get -
+>>main.js main.ts
+This will done when we run ng serve autometically.
+
+
+------------------ ---------------Decleration of Variable----------------------------------
+
+var number=1;
+let count=2;
+ex-
+function dosomething()
+{
+for(var i=0li<5;i++)
+{
+console.log(i)
+}
+
+console.log('finally : '+i);//stil the i is used here outside the for loop scope this is possible wiht var in ts
+// But this is not possible with "let " keyword.
+
+}
+----------------------------------------to compile .ts file--> tsc main.ts
+---------------------------------------->> To run js file ->> node main.js           /we Run our .ts file with helpof .js file
+compile and run together->> tsc main.ts | node main.js
+
+when we used let in .ts it will be converted into var in .js file during compilaton.
+-->let count=5;
+-->count='a';//error in .ts
+this genrated compilation error inside the .ts file but when we compile it wil give correct .js file.
+ex-
+var count=5;
+count='a' // This is possible in js dynamicially type value assign.
+
+----------------------------------------------types-----------
+-->let a -This is defualt any dataType which can contains all type of data
+-->let a:number;
+-->let b:boolean;
+-->let c:string;
+-->let d:any;
+-->let e:number[]=[1,2,3,4]
+-->let f:any[]=[1,true,'a',false];
+-->const ColorRed=0;
+-->const ColorGreen=1;
+-->const ColorBlue=2;
+
+-->enum color {Red=0,Green=1,Blue=2};
+-->let backgroundColor=Color.Red;
+
+-----------------------------------------------When we compile .ts  file we will get this .js file--------
+var a;
+var b;
+var c;
+var d = [1, 2, 3, 4];
+var ColorRed = 0;
+var ColorYello = 1;
+var ColorBlue = 2;
+var Color;
+(function (Color) {  //THis is how enum will convert into js
+    Color[Color["Red"] = 0] = "Red";
+    Color[Color["Yello"] = 1] = "Yello";
+    Color[Color["Blue"] = 2] = "Blue";
+    Color[Color["Purple"] = 3] = "Purple";
+})(Color || (Color = {}));
+;
+var backgroundColor = Color.Red;
+---------------------------------------------------------------------------------------------------------  type-assertion-------------------------------------------------------------------
+
+let message='abc'
+boolean t=message.endsWith('c');
+or 
+let message;
+message='abc'
+let endsWithc=(<String>message).endsWIth('c');
+//.endsWith() wil get the suggested or intelligence when we have message obj not for any obj.
+let alternateaway=(message as String) .endsWith('c');
+
+-----------------------------------arrow Function--
+in Js
+let log=funcation(message)
+{
+console.log(message)
+}
+in ts-
+let dolog=(message)=>console.log(message);
+-------------------------------------------------------------------------------------------------------interfaces------------------------------------------------------------------
+//They are only for the decleraton but not for the definition
+interface Point
+{
+x:number;
+y:number;
+}
+
+let drawPoint=(point:Point)==>{...}
+let findDistance=(pointA:Point,pointB:point){..}
+these methods are not a part of the interface but it shoud be as one unit if it is realted to one another.
+so we go for class--------------------------------------------------------Class------------------------------------
+class Point
+{
+private x:number;
+private y:number;
+
+constructor(x?:number,y?:number)
+{
+this.x=x;
+this.y=y;
+}
+
+draw()
+{
+//...
+console.log('x'+ this.x);
+console.log('y' +this.y);
+}
+findDistance(point:Point)
+{
+//...
+}
+}
+These are the part of the class.
+------------------------------------------------------------------------Objects---------------------------------------------
+
+let point=new Point();
+point.x=1;
+point.y=2;
+
+point.draw();//partof the class
+
+------------------------------------------------------------------constructor----------------------------------------
+above three line can be replaced by adding  constructor inside the class-
+point =new Point(1,2);
+-->if we don't want to compuslory pass the value here in the object delcleration than we can put '?'  inside the constructor definaton.
+-->This "?" will work like default constructor.
+---------------------------------------------------------------------Access Modifers-----------------------------------
+point =new Point(1,2);
+point.x=7;
+so,these values can be updated so, protect this from any changes we  use access modifer. if we do it private then no one can update this.
+->public->bydefaul all are public
+->private
+->protected
+--------------------------------------access modifer in constructor-------------------------------------------------
+If we use like this.-
+constructor (private x?:number,private y?:number)
+    {
+        
+    }
+we do not have to delear member variable too inside the class, nor intialise it .
+we can direct pass value by obj creation and autometically these x and y will be created,intialise and can be used inside the  method.
+--------------------------------------------------------property-----------------------------------------------------------------------
+
+get X()
+    {
+        return this.x;
+    
+    }
+    set X(value)
+    {
+        if(value<0)
+        throw Error("Values can not be less than 0");
+        this.x=value;
+    }
+These can be invoked like methods-
+point.X=10;
+let a=point.X;
+Set and Get keyword used to set the properties with same properties name .
+
+A properties looks like filed from outside but its really method inside the class.
+-----------------------------------------------------------------------------------------------------------Modules-------------------------------------------------
+Every file in ts is called Modules.
+export keyword is used to avail the class outside the module or file.
+------------------------------------------------------------------------------------------import point class inside the main -----------
+
+import { Point } from  './point'  /->> ',/'  means from the same folder
+-->those files which have import or export on the top is caled module  in ts.
+--> When we get error like :Assessors are only available when targeting ECMAScript 5 and higher than use command--> tsc file.ts  --target ES5 .

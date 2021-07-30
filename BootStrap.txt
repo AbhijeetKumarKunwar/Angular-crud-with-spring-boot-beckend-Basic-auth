@@ -1,0 +1,840 @@
+			BootStrap
+
+What is Bootstrap?
+Bootstrap is a free front-end framework for faster and easier web development
+Bootstrap includes HTML and CSS based design templates for typography, forms, buttons, tables, navigation, modals, image carousels and many other, as well as optional JavaScript plugins
+Bootstrap also gives you the ability to easily create responsive designs
+
+margin-it is the space b/w the nearing componentss
+->margin-bottom:auto wil set the boundry of of the grid according to the content of the page .
+for Desingin the two column block page we use one div as row and purt two column div inside that and
+we can have page according the need.
+
+What is Responsive Web Design?
+
+Responsive web design is about creating web sites which automatically adjust themselves to look good on all devices, from small phones to large desktops.
+
+Downloading Bootstrap
+If you want to download and host Bootstrap yourself, go to getbootstrap.com, and follow the instructions there.
+
+Bootstrap CDN
+If you don't want to download and host Bootstrap yourself, you can include it from a CDN (Content Delivery Network).
+
+MaxCDN provides CDN support for Bootstrap's CSS and JavaScript. You must also include jQuery:
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+------------------------------------------------------------------------------------------------------------------
+In bootstrap we genrally add classes to include the components.
+
+
+
+
+<body>
+    <!--alert--->
+    <!--colors->primary,success,danger,info, warning-->
+    <div class="container"> <!--container class will contain all the component on it, if we remove this class it will show it effect as well--> like one block of our screen
+  
+        <div class="alert alert-primary">
+            <strong>Well done !</strong>
+            <p>You have successfully created Alert</p>
+
+        </div>
+
+    </div>
+    
+    <!-- buttons-->
+    <a href="https://www.google.com" class="btn btn-success">Submit</a> //btn-class, btn-success is the blue color to the button
+
+    <a href="https://www.google.com" class="btn btn-outline-success">Submit</a>
+    <!-- outline will make green border only rest body will be white color and we do with all rest of colors-->
+    <div class="container">
+<!--we can have block leval buttons which will have length of div container as same-->
+        <a href="#" class="btn btn-primary btn-block">Submit</a>
+    </div>  
+</body>
+
+Bootstrap 4 Dropdowns--->A dropdown menu is a toggleable menu that allows the user to choose one value from a predefined list:
+
+
+Example
+<div class="dropdown">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Link 1</a>
+    <a class="dropdown-item" href="#">Link 2</a>
+    <a class="dropdown-item" href="#">Link 3</a>
+  </div>
+</div>
+
+
+Example Explained
+The .dropdown class indicates a dropdown menu.
+
+To open the dropdown menu, use a button or a link with a class of .dropdown-toggle and the data-toggle="dropdown" attribute.
+Data-toggle will help to bind the dropdown data and dropdown-toggle class will add drop-down sign to the button.
+
+Add the .dropdown-menu class to a <div> element to actually build the dropdown menu. Then add the .dropdown-item class to each element (links or buttons) inside the dropdown menu.
+
+
+Dropdown Divider---------------->
+The .dropdown-divider class is used to separate links inside the dropdown menu with a thin horizontal border:
+
+Example
+<div class="dropdown-divider"></div> in between the list of links.
+
+Dropdown Header------------->
+The .dropdown-header class is used to add headers inside the dropdown menu:
+
+Example
+<div class="dropdown-header">Dropdown header 1</div> this line should be there at the first line inside dropdown-menu div.
+
+Disable and Active items-----------------> inside the dropdown list
+Highlight a specific dropdown item with the .active class (adds a blue background color).
+
+To disable an item in the dropdown menu, use the .disabled class (gets a light-grey text color and a "no-parking-sign" icon on hover):
+
+Example
+<a class="dropdown-item active" href="#">Active</a>
+<a class="dropdown-item disabled" href="#">Disabled</a>
+
+Grouped Buttons with a Dropdown------------------>
+Example
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+       Sony
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Tablet</a>
+      <a class="dropdown-item" href="#">Smartphone</a>
+    </div>
+  </div>
+</div>
+
+Split Button Dropdowns---------------------
+ 
+
+Example
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Link 1</a>
+    <a class="dropdown-item" href="#">Link 2</a>
+  </div>
+</div>
+
+b1   b2    b3   b4 ->this style of dropdowns can be made using the followi ng code---->
+
+<body>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary ">Primary</button>
+        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">//dropdown-toggle-split will give little space b/w horizental adjecent dropdown buttons.
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-warning ">Primary</button>
+        <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+        </div>
+      </div>
+    
+like wise-------------------
+    
+</body>
+
+->Bootstrap 4 Navs--------------------------------------
+Nav Menus-->
+
+Link   Link    Link     Disabled
+
+If you want to create a simple horizontal menu, add the .nav class to a <ul> element, followed by .nav-item for each <li> and add the .nav-link class to their links:
+
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+
+Vertical Nav->Add the .flex-column class to create a vertical nav:
+<ul class="nav flex-column">
+
+->Tabs
+Turn the nav menu into navigation tabs with the .nav-tabs class. Add the .active class to the active/current link. If you want the tabs to be togglable, see the last example on this page.
+<ul class="nav nav-tabs"> only class name is update than navigation link will look like tabs.
+
+->pills
+same change class name -><ul class="nav nav-pills"> than link will show like pills
+
+-->Pills with Dropdown
+<body>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>//nav menu item 
+        <li class=" dropdown"> //This will show drop down in the navigation menu
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Dropdown</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Link 1</a>
+            <a class="dropdown-item" href="#">Link 2</a>
+            <a class="dropdown-item" href="#">Link 3</a>
+          </div>
+        </li>
+   </ul>
+</body>
+-------------->Bootstrap 4 Navigation Bar
+
+A navigation bar is a navigation header that is placed at the top of the page:
+
+Basic Navbar
+With Bootstrap, a navigation bar can extend or collapse, depending on the screen size.
+
+A standard navigation bar is created with the .navbar class, followed by a responsive collapsing class: .navbar-expand-xl|lg|md|sm (stacks the navbar vertically on extra large, large, medium or small screens).
+
+To add links inside the navbar, use a <ul> element with class="navbar-nav". Then add <li> elements with a .nav-item class followed by an <a> element with a .nav-link class:
+--> we can also say that we can put nav-menu inside the nav tab.
+<nav class="navbar navbar-expand-sm bg-light">
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 1</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 2</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 3</a>
+    </li>
+  </ul>
+
+</nav>
+Colored Navbar------------------------------------------->
+
+Use any of the .bg-color classes to change the background color of the navbar (.bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-secondary, .bg-dark and .bg-light)
+
+Tip: Add a white text color to all links in the navbar with the .navbar-dark class, or use the .navbar-light class to add a black text color.
+
+<nav class="navbar navbar-expand-sm bg-light navbar-light">//light or white background color
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+  </ul>
+</nav>
+<!-- Black with white text -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">...</nav>
+
+<!-- Blue with white text -->
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">...</nav>
+----------------------------------------------------------------------------------------------------Brand / Logo----------------------
+
+The .navbar-brand class is used to highlight the brand/logo/project name of your page:
+
+Example
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">Logo</a>  this will be at the first line inside the nav tag. it will highlight the logo lattr.
+  ...
+</nav>
+------------------------------------------------------------image on nav-------------------------
+When using the .navbar-brand class on images, Bootstrap 4 will automatically style the image to fit the navbar vertically.
+
+Example
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+   <a class="navbar-brand" href="#">
+    <img src="bird.jpg" alt="Logo" style="width:40px;">
+  </a>
+  ...
+</nav>
+
+--------------------------------------------search and button on nav--------------------
+
+Navbar Forms and Buttons
+Search
+Add a <form> element with class="form-inline" to group inputs and buttons side-by-side:
+
+Example
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <form class="form-inline" action="/action_page.php">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    <button class="btn btn-success" type="submit">Search</button>
+  </form>
+</nav>
+
+			Container in bootstrap 4
+
+Containers
+You learned from the previous chapter that Bootstrap requires a containing element to wrap site contents.
+
+Containers are used to pad the content inside of them, and there are two container classes available:
+
+1.The .container class provides a responsive fixed width container
+2.The .container-fluid class provides a full width container, spanning the entire width of the viewport
+
+<div class="container">
+  <h1>My First Bootstrap Page</h1>
+  <p>This is some text.</p>
+</div>
+Use the .container class to create a responsive, fixed-width container.
+
+Note that its width (max-width) will change on different screen sizes:
+
+Use the .container-fluid class to create a full width container, that will always span the entire width of the screen (width is always 100%):
+
+Example
+<div class="container-fluid">
+  <h1>My First Bootstrap Page</h1>
+  <p>This is some text.</p>
+</div>
+
+				Bootstrap 4 Grid System
+Bootstrap's grid system is built with flexbox and allows up to 12 columns across the page.
+
+If you do not want to use all 12 columns individually, you can group the columns together to create wider columns:
+The grid system is responsive, and the columns will re-arrange automatically depending on the screen size.
+
+Make sure that the sum adds up to 12 or fewer (it is not required that you use all 12 available columns
+Grid Classes
+The Bootstrap 4 grid system has five classes:
+
+.col- (extra small devices - screen width less than 576px)//only phone screens
+.col-sm- (small devices - screen width equal to or greater than 576px)
+.col-md- (medium devices - screen width equal to or greater than 768px)
+.col-lg- (large devices - screen width equal to or greater than 992px)
+.col-xl- (xlarge devices - screen width equal to or greater than 1200px)
+The classes above can be combined to create more dynamic and flexible layouts.
+
+-->First example: create a row (<div class="row">). Then, add the desired number of columns (tags with appropriate .col-*-* classes). The first star (*) represents the responsiveness: sm, md, lg or xl, while the second star represents a number, which should add up to 12 for each row.
+
+The following example shows how to create four equal-width columns starting at tablets and scaling to extra large desktops. On mobile phones or screens that are less than 576px wide, the columns will automatically stack on top of each other:
+
+Example
+<div class="row">
+  <div class="col-sm-3">.col-sm-3</div>
+  <div class="col-sm-3">.col-sm-3</div>
+  <div class="col-sm-3">.col-sm-3</div>
+  <div class="col-sm-3">.col-sm-3</div>
+</div>
+
+				Bootstrap 4 Default Settings
+Bootstrap 4 uses a default font-size of 16px, and its line-height is 1.5.
+
+The default font-family is "Helvetica Neue", Helvetica, Arial, sans-serif.
+
+In addition, all <p> elements have margin-top: 0 and margin-bottom: 1rem (16px by default).
+
+				Display Headings
+Display headings are used to stand out more than normal headings (larger font-size and lighter font-weight), and there are four classes to choose from: .display-1, .display-2, .display-3, .display-4
+
+				<mark>
+Bootstrap 4 will style the HTML <mark> element with a yellow background color and some padding:
+				<abbr>
+Bootstrap 4 will style the HTML <abbr> element with a dotted border bottom:
+Tip: Each class scales up, so if you wish to set the same widths for sm and md, you only need to specify sm
+
+<kbd>
+Bootstrap 4 will style the HTML <kbd>(keyboard) element in the following way:
+
+Example
+Use ctrl + p to open the Print dialog box.
+
+					Text Colors
+Bootstrap 4 has some contextual classes that can be used to provide "meaning through colors".
+The classes for text colors are: .text-muted, .text-primary, .text-success, .text-info, .text-warning, .text-danger, .text-secondary, .text-white, .text-dark, .text-body (default body color/often black) and .text-light:
+
+<div class="container">
+  <h2>Opacity Text Colors</h2>
+  <p>Add 50% opacity for black or white text with the .text-black-50 or .text-white-50 classes:</p>
+  <p class="text-black-50">Black text with 50% opacity on white background</p>
+  <p class="text-white-50 bg-dark">White text with 50% opacity on black background</p>
+</div>
+				Background Colors
+The classes for background colors are: .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-secondary, .bg-dark and .bg-light.
+
+			BootStrap Table
+
+<table class="table">
+    <thead>// This tag is used to grouped header content in an heml table.
+      <tr>
+        <th>Firstname</th>//* header content
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>//body of the table
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+     
+  </table>
+
+					Striped Rows
+The .table-striped class adds zebra-stripes to a table:
+					Bordered Table
+The .table-bordered class adds borders on all sides of the table and cells:
+					Hover Rows
+The .table-hover class adds a hover effect (grey background color) on table rows:
+					Black/Dark Table
+The .table-dark class adds a black background to the table:
+
+					Borderless Table
+The .table-borderless class removes borders from the table:
+
+Class	Description
+.table-primary	Blue: Indicates an important action
+.table-success	Green: Indicates a successful or positive action
+.table-danger	Red: Indicates a dangerous or potentially negative action
+.table-info	Light blue: Indicates a neutral informative change or action
+.table-warning	Orange: Indicates a warning that might need attention
+.table-active	Grey: Applies the hover color to the table row or table cell
+.table-secondary	Grey: Indicates a slightly less important action
+.table-light	Light grey table or table row background
+.table-dark	Dark grey table or table row background
+
+				Table Head Colors
+The .thead-dark class adds a black background to table headers, and the .thead-light class adds a grey background to table headers:
+
+				Responsive Tables
+The .table-responsive class adds a scrollbar to the table when needed (when it is too big horizontally):
+
+Example
+<div class="table-responsive">
+  <table class="table">
+    ...
+  </table>
+</div>
+			Bootstrap 4 Images
+
+				Rounded Corners
+The .rounded class adds rounded corners to an image:
+
+Example
+<img src="cinqueterre.jpg" class="rounded" alt="Cinque Terre">
+Circle->
+<img src="cinqueterre.jpg" class="rounded-circle" alt="Cinque Terre">
+thumnail-><img src="cinqueterre.jpg" class="img-thumbnail" alt="Cinque Terre">
+				Responsive Images
+
+Images come in all sizes. So do screens. Responsive images automatically adjust to fit the size of the screen.
+
+Create responsive images by adding an .img-fluid class to the <img> tag. The image will then scale nicely to the parent element.
+
+The .img-fluid class applies max-width: 100%; and height: auto; to the image:
+
+Example
+<img class="img-fluid" src="img_chania.jpg" alt="Chania">
+				Bootstrap 4 Jumbotron
+
+A jumbotron indicates a big grey box for calling extra attention to some special content or information.
+
+				Full -width-jumbotron(it will make it the backgroud highlightalble to notice)
+
+Tip: Inside a jumbotron you can put nearly any valid HTML, including other Bootstrap elements/classes.
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>Bootstrap Tutorial</h1>
+    <p>Bootstrap is the most popular HTML, CSS...</p>
+  </div>
+</div>
+			Bootstrap Badges-->
+Badges are used to add additional information to any content. Use the .badge class together with a contextual class (like .badge-secondary) within <span> elements to create rectangular badges. Note that badges scale to match the size of the parent element (if any):
+<h1>Example heading <span class="badge badge-secondary">New</span></h1>
+<h2>Example heading <span class="badge badge-secondary">New</span></h2>
+
+			Bootstrap  Progress-bar
+Basic Progress Bar
+A progress bar can be used to show a user how far along he/she is in a process.
+To create a default progress bar, add a .progress class to a container element and add the .progress-bar class to its child element. Use the CSS width property to set the width of the progress bar:
+
+Example
+<div class="progress">
+  <div class="progress-bar" style="width:70%"></div>
+</div>
+
+			progress bar color
+By default, the progress bar is blue (primary). Use any of the Bootstrap 4 contextual background classes to its color:
+<!-- Green -->
+<div class="progress">
+  <div class="progress-bar bg-success" style="width:20%"></div>
+</div>
+
+<!-- Turquoise -->
+<div class="progress">
+  <div class="progress-bar bg-info" style="width:30%"></div>
+</div>
+
+<!-- Orange -->
+<div class="progress">
+   <div class="progress-bar bg-warning" style="width:40%"></div>
+</div>
+Use the .progress-bar-striped class to add stripes to the progress bars:
+
+Example
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" style="width:40%"></div>
+</div>
+				Bootstrap 4 Spinners(we see on the page wile page loading )
+
+To create a spinner/loader, use the .spinner-border class:
+
+Example
+<div class="spinner-border"></div>
+For different colors: we use text-color:->
+
+<div class="spinner-border text-muted"></div>
+<div class="spinner-border text-primary"></div>
+<div class="spinner-border text-success"></div>
+<div class="spinner-border text-info"></div>
+<div class="spinner-border text-warning"></div>
+					Growing Spinners
+Use the .spinner-grow class if you want the spinner/loader to grow instead of "spin":
+<div class="spinner-grow text-muted"></div>
+<div class="spinner-grow text-primary"></div>
+					Spinner Size--->
+Use .spinner-border-sm or .spinner-grow-sm to create a smaller spinner:
+<div class="spinner-border spinner-border-sm"></div>
+<div class="spinner-grow spinner-grow-sm"></div>
+					Spinner Buttons
+You can also add spinners to a button, with or without text:
+<button class="btn btn-primary">
+  <span class="spinner-border spinner-border-sm"></span>//withour text
+</button>
+
+<button class="btn btn-primary">
+  <span class="spinner-border spinner-border-sm"></span>
+  Loading..
+</button>
+
+							Basic Pagination
+If you have a web site with lots of pages, you may wish to add some sort of pagination to each page.
+
+To create a basic pagination, add the .pagination class to an <ul> element. Then add the .page-item to each <li> element and a .page-link class to each link inside <li>:
+
+Example
+<ul class="pagination">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+					Active State
+The .active class in li class used to "highlight" the current page:
+					Disable state
+<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+
+					Bootstrap 4 List Groups
+
+To create a basic list group, use an <ul> element with class .list-group, and <li> elements with class .list-group-item:
+
+Example
+<ul class="list-group">
+  <li class="list-group-item">First item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+</ul>
+						Active State
+  <li class="list-group-item active">Active item</li>
+
+To create a list group with linked items, use <div> instead of <ul> and <a> instead of <li>. Optionally, add the .list-group-item-action class if you want a grey background color on hover:
+
+Example
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action">First item</a>
+  <a href="#" class="list-group-item list-group-item-action">Second item</a>
+  <a href="#" class="list-group-item list-group-item-action">Third item</a>
+</div>
+
+							Horizontal List Groups
+If you want the list items to display horizontally instead of vertically (side by side instead of on top of each other), add the .list-group-horizontal class to .list-group:
+
+
+<ul class="list-group list-group-horizontal">
+  <li class="list-group-item">First item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+  <li class="list-group-item">Fourth item</li>
+</ul>
+						Bootstrap 4 Cards
+A card in Bootstrap 4 is a bordered box with some padding around its content. It includes options for headers, footers, content, colors, etc.
+The .card-header class adds a heading to the card and the .card-footer class adds a footer to the card:
+
+Example
+<div class="card">
+  <div class="card-header">Header</div>
+  <div class="card-body">Content</div>
+  <div class="card-footer">Footer</div>
+</div>
+						Tiles, texts and links On cards
+
+Use .card-title to add card titles to any heading element. The .card-text class is used to remove bottom margins for a <p> element if it is the last child (or the only one) inside .card-body. The .card-link class adds a blue color to any link, and a hover effect.
+
+Example
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Card title</h4>
+    <p class="card-text">Some example text. Some example text.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+						Images 
+Add .card-img-top or .card-img-bottom to an <img> to place the image at the top or at the bottom inside the card. Note that we have added the image outside of the .card-body to span the entire width:
+
+Example-> it will like id-card on the spratw box on the screen.
+<div class="card" style="width:400px">
+  <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+  <div class="card-body">
+    <h4 class="card-title">John Doe</h4>
+    <p class="card-text">Some example text.</p>
+    <a href="#" class="btn btn-primary">See Profile</a>
+  </div>
+</div>
+
+				Turn an image into a card background and use .card-img-overlay to add text on top of the image:
+
+Example
+<div class="card" style="width:500px">
+  <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+  <div class="card-img-overlay">
+    <h4 class="card-title">John Doe</h4>
+    <p class="card-text">Some example text.</p>
+    <a href="#" class="btn btn-primary">See Profile</a>
+  </div>
+</div>
+					Card deck
+it will kike 
+The .card-deck class creates a grid of cards that are of equal height and width. The layout will automatically adjust as you insert more cards.
+
+Note: The cards are displayed vertically on small screens (less than 576px):
+
+Example
+<div class="card-deck">
+  <div class="card bg-primary">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the first card</p>
+    </div>
+  </div>
+  <div class="card bg-warning">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the second card</p>
+    </div>
+  </div>
+  <div class="card bg-success">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the third card</p>
+    </div>
+  </div>
+  <div class="card bg-danger">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the fourth card</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+				BootStrap Form
+				Bootstrap 4's Default Settings
+
+Form controls automatically receive some global styling with Bootstrap:
+All textual <input>, <textarea>, and <select> elements with class .form-control have a width of 100%.
+
+					Bootstrap 4 Form Layouts
+Bootstrap provides two types of form layouts:
+
+Stacked (full-width) form
+Inline form
+
+The following example creates a stacked form with two input fields, one checkbox, and a submit button.
+
+Add a wrapper element with .form-group, around each form control, to ensure proper margins:
+
+<form action="/">
+  <div class="form-group">//it will structure the form 
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" placeholder="Enter email" id="email">//form-control will make it to the full  screen and imporove the style.
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+						What is form- control in bootstrap?
+Give textual form controls like <input> s and <textarea> s an upgrade with custom styles, sizing, focus states, and more.
+ 						form-group class
+The . form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging. By default it only applies margin-bottom , but it picks up additional styles in . form-inline as needed.
+
+							Bootstrap Inline Form
+
+In an inline form, all of the elements are inline and left-aligned.
+
+Note: This only applies to forms within viewports that are at least 576px wide. On screens smaller than 576px, it will stack horizontally.
+
+Additional rule for an inline form:
+
+Add class .form-inline to the <form> element
+The following example creates an inline form with two input fields, one checkbox, and one submit button:
+
+<form class="form-inline" action="//">
+  <label for="email">Email address:</label>
+  <input type="email" class="form-control" placeholder="Enter email" id="email">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+							Inline Form with Utilities
+The inline form above feels "compressed", and will look much better with Bootstrap's spacing utilities. The following example adds a right margin (.mr-sm-2) to each input on all devices (small and up). And a margin bottom class (.mb-2) is used to style the input field when it breaks (goes from horizontal to vertical due to not enough space/width)
+
+<form class="form-inline" action="/action_page.php">
+  <label for="email" class="mr-sm-2">Email address:</label>//right spacing of 2 margin
+  <input type="email" class="form-control mb-2 mr-sm-2" placeholder="Enter email" id="email">//mb-2 is for styling or adjusting to vertical from horizental when not enough space....
+  <label for="pwd" class="mr-sm-2">Password:</label>
+  <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="pwd">
+  <div class="form-check mb-2 mr-sm-2">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+							Form Row/Grid
+You can also use columns (.col) to control the width and alignment of form inputs without using spacing utilities. Just remember to put them inside a .row container.
+
+In the example below, we use two columns that will appear side by side. You will learn much more about columns and rows in the Bootstrap Grids Chapter.
+<form>
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="col">
+      <input type="password" class="form-control" placeholder="Enter password" name="pswd">
+    </div>
+  </div>
+</form>
+
+	If you want less grid margins (override default column gutters), use .form-row instead of .row:
+
+<form>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="col">
+      <input type="password" class="form-control" placeholder="Enter password" name="pswd">
+    </div>
+  </div>
+</form>
+							Form-Validation
+
+You can use different validation classes to provide valuable feedback to users. Add either .was-validated or .needs-validation to the <form> element, depending on whether you want to provide validation feedback before or after submitting the form. The input fields will have a green (valid) or red (invalid) border to indicate what's missing in the form. You can also add a .valid-feedback or .invalid-feedback message to tell the user explicitly what's missing, or needs to be done before submitting the form.
+
+				In this example, we use .was-validated to indicate what's missing before submitting the form:
+-> it will show red line border before filling the form and when we put the data it wil show green.
+
+<form action="/action_page.php" class="was-validated">
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">Valid.</div>//for test purpose
+    <div class="invalid-feedback">Please fill out this field.</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">Valid.</div>
+    <div class="invalid-feedback">Please fill out this field.</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> I agree on blabla.
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Check this checkbox to continue.</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+In this example, we use .needs-validation, which will add the validation effect AFTER the form has been submitting (if there's anything missing). Note that you will also have to add some jQuery code for this example to work properly:
+							Need Validation
+
+form action="/action_page.php" class="was-validated">
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">Valid.</div>
+    <div class="invalid-feedback">Please fill out this field.</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">Valid.</div>
+    <div class="invalid-feedback">Please fill out this field.</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> I agree on blabla.
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Check this checkbox to continue.</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

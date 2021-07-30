@@ -1,0 +1,228 @@
+
+Web service must be platform indepandent.
+Request-Input to the webservice
+Response-Output of the webservice.
+
+Json and xml are the mode of response and request which are platform independent.
+-> service Definition will specify the what is the format either json or xml.
+
+key terminology-
+service provider-The web service which is providing the response to the application.
+service consumer-out application where we take response.
+Transport-how the serviec is exposed
+
+
+				Rest
+Representational state Transfer.
+HTTP methods-GET,PUT,POST,DELETE etc
+HTTP status codes 200,404 ...
+
+Key Abstraction -Resource
+-A resource has an URI(uniform resouce identifier) 
+-/user/ranga/todos/1
+-> A resource can have different representation.
+-xml
+-html
+-json
+
+->For runnning the rest service in the debug mode, write this in the application.properties file-
+logging.level.org.springframework=debug
+->when we hit the uri to the browser the dispatcher servelet is one who handling the request, it is the front controller
+for the mcv appliaction.
+->D.D know all the mapping present in the application and it will match the url and get the right controller for the request.
+This will convert the beans into the json and return to the browser.
+
+							@CrossOrigin()-ANOTATION IN SPRING BOOT--
+
+Cross-Origin Resource Sharing (CORS) is a security concept that allows restricting the resources implemented in web browsers. It prevents the JavaScript
+ code producing or consuming the requests against different origin.For example, your web application is running on 8080 port and by using JavaScript you 
+are trying to consuming RESTful web services from 9090 port. Under such situations, you will face the Cross-Origin Resource Sharing security issue on your 
+web browsers.
+In this chapter, we are going to learn in detail about How to Enable Cross-Origin Requests for a RESTful Web Service application.
+
+Enable CORS in Controller Method
+We need to set the origins for RESTful web service by using @CrossOrigin annotation for the controller method. This @CrossOrigin annotation supports 
+specific REST API, and not for the entire application.
+
+@RequestMapping(value = "/products")
+@CrossOrigin(origins = "http://localhost:8080")
+
+public ResponseEntity<Object> getProduct() {
+   return null;
+}
+
+-> we are done with todo , crud operation from the angular fornt-end.
+
+
+							-> we need to add security to the application -
+
+
+add security dependency first-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+->Refresh it  and update the project once. This is the form based basic authentication, "user" is the useriD and password we will get on the logger.
+spring security enables both form based and basic autharazation.
+->All it sees are HTTP requests and it ties those to a particular session according to the value of the the JSESSIONID cookie that they contain.
+ When a user authenticates during a session, Spring Security's concurrent session control checks the number of other authenticated sessions that 
+they have. If they are already authenticated with the same session, then re-authenticating will have no effect. "
+
+->To get rid of temparory password we can typecast the userid and password in the application.proerties file
+spring.security.user.name=abhi
+spring.security.user.password=abhi
+
+now id and password is mendatory to access the resources, if we are doing through postman or any client we need to pass id and pass using body in basic auth.
+
+->update or resstart ide to get the changes/
+-> 								--hOW TO GET SERVICE OF AUTH Resources FROM THE ANGULAR ---
+
+we will get the resources from the spring having protected by userId and password .
+
+->we need to send basic authenticated header in the method which is calling the resources.
+->we can pass the headers from all the rest  methods , it is the second parameter after restUrl,
+->get('url',{headers}),same with put,delete and get..
+
+->inside the service class from where we make rest service call, from angular.
+
+
+  createBasicAuthenticationHttpHeader()
+  {
+    let username='abhi';
+    let password='abhi';
+    let basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
+     return basicAuthHeaderString;
+  }
+
+->Basic is the type of auth we used here and username and password is seprated by the colon.
+and this string must be in the form of windowBase 64, btoa will do the need full.
+->this will be passed as the headers in the rest methods.
+
+->how will it send-
+
+public getTodoById(id)
+  {
+    let basicAuthHeaderString = this.createBasicAuthenticationHttpHeader();
+    let headers = new HttpHeaders({
+        Authorization: basicAuthHeaderString
+       })
+    return this.http.get<Todo>(`http://localhost:8080/users/todos/${id}`,{headers})
+  }
+-> we will create HttpHeader object and put the autorrization value and pass as object to the methd as given above.
+
+->when we try to access the resources form angular still we will face acess issue.
+when we inspect it is some options methods, actually before any http request opetions check is done , which is failing here.
+ 
+What is OPTIONS request-->
+
+TL;DR answer
+Explanation
+The OPTIONS request is so called pre-flight request, which is part of Cross-origin resource sharing (CORS). Browsers use it to check if a request is allowed from a particular domain as follows:
+
+The browser wants to send a request to a particular URL, let's say a POST request with the application/json content type
+First, it sends the pre-flight OPTIONS request to the same URL
+What follows depends on the pre-flight request's response HTTP status code:
+If the server replies with a non-2XX status response, the browser won't send the actual request (because he knows now that it would be refused anyway)
+If the server replies with a HTTP 200 OK (or any other 2XX) response, the browser will send the actual request, POST in your case
+Solution
+So, in your case, the proper header is present, you just have to make sure the pre-flight request's response HTTP status code is 200 OK or some other successful one (2XX).
+
+->Options request will check the permission
+
+->							=========COnfigure the websecurity=============
+
+ctrk+shif+t->to open all the class defined in our Application.
+
+->serch for WSCA-web security configurar Adapter
+This class contained default security configuration for the spring securtity.
+-> we will configure the -configure(HttpSecurity http) methods from here
+-> we will copy the default implementation and create new class in our project and overide this menthod.
+
+
+@Configuration	//-this file containg the configuration 
+@EnableWebSecurity	//---this will enable web security
+public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerAdapter {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+		http
+		.csrf().disable() //we are using jwt tocken, tht's why we are disabling this 
+		.authorizeRequests()
+		.antMatchers(HttpMethod.OPTIONS,"/**").permitAll() //This wil allow all pre-flight requists ..i.e options requests.
+		.anyRequest().authenticated()
+		.and().httpBasic();  //other will be authenticated.
+		
+	} 
+
+}
+
+"/**"-any url
+
+->stop and start the server agian
+
+							HTTP-Interceptor
+->Interceptors allow us to intercept incoming or outgoing HTTP requests using the HttpClient. By intercepting the HTTP request, 
+we can modify or change the value of the request.
+
+To create an Interceptor, we need to implement the HttpInterceptor interface from @angular/common/http package. Every time our application makes
+ an HTTP request using the HttpClient service, the Interceptor calls the intercept() method.
+
+When the intercept() method is called Angular passes a reference to the httpRequest object. With this request, we can inspect it and modify it as
+ necessary. Once our logic is complete, we call next.handle and return the updated request onto the application.
+
+Once our Interceptor is created, we need to register it as a multi-provider since there can be multiple interceptors running within an application.
+ Important note, you must register the provider to the app.module for it to properly apply to all application HTTP requests. Interceptors will only
+ intercept requests that are made using the HttpClient service.
+
+HTTP Header Interceptor
+Often we need to return an API key to an authenticated API endpoint via a request Header. Using Interceptors, we can simplify our application code
+ to handle this automatically. Let’s make a simple use case of attaching an API header key to each request.
+								
+								<-Example->
+
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpEvent, HttpResponse, HttpRequest, HttpHandler } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+
+@Injectable()
+export class HeaderInterceptor implements HttpInterceptor {
+  intercept(httpRequest: HttpRequest<any>, next: HttpHandler) {
+    const API_KEY = '123456';
+    return next.handle(httpRequest.clone({ setHeaders: { API_KEY } }));
+  }
+}
+
+On the httpRequest object, we can call the clone method to modify the request object and return a new copy. In this example we are attaching
+ the API_KEY value as a header to every HTTP request httpRequest.clone({ setHeaders: { API_KEY } }).
+
+
+->Create one service in angular to handle the HttpInterceptor, implements HttpInterceptor to our class and goto the definition of HttpInterceptor interface
+and copy the intercept method signature  and overide the methods as reaquired then call next method to handle the request back to the application.
+our ex-
+
+
+ intercept(req: HttpRequest<any>, next: HttpHandler) {
+    //req is the http request which can't be altered , so we need to clone for chnage.
+    let username = 'abhi';
+    let password = 'abhi';
+    let basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);// this will form our login credential
+    req = req.clone(				//we are cloning the reques obj because we can't modify that.
+      {
+        setHeaders: {
+          Authorization: basicAuthHeaderString		//set header will add the login credentails header to the request 
+        }
+      }
+    )
+    return next.handle(req);//we are sednding the modified request.
+//it is act like filter we get the requst , modified and pass it to the handler.
+  }
+
+-->we need to register this interceptor to the angular-
+
+providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:HttpinterCepterService,multi:true}
+  ],
+
+in app.module.ts file

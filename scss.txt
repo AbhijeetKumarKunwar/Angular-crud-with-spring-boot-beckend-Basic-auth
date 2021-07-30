@@ -1,0 +1,485 @@
+			What is Responsive Web Design?
+Responsive web design makes your web page look good on all devices.
+Responsive web design uses only HTML and CSS.
+Responsive web design is not a program or a JavaScript.
+
+It is called responsive web design when you use CSS and HTML to resize, hide, shrink, enlarge, 
+or move the content to make it look good on any screen.
+
+
+Padding-It is the space which is needed to the our component. from its left right or border.
+e.g->
+div {
+  border: 1px solid black;
+  background-color: lightblue;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+The div component will be inside the border of radius 1 px and it will be 50px from the top borderline and as 30 form 
+left , 50 from the bottom and 80 form left as given, this is the  way we controll our content positioning.
+
+
+Setting The Viewport
+HTML5 introduced a method to let web designers take control over the viewport, through the <meta> tag.
+
+You should include the following <meta> viewport element in all your web pages:
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+This gives the browser instructions on how to control the page's dimensions and scaling.
+
+The width=device-width part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).
+
+The initial-scale=1.0 part sets the initial zoom level when the page is first loaded by the browser.
+
+
+				Media query
+What is a Media Query?
+Media query is a CSS technique introduced in CSS3.
+
+It uses the @media rule to include a block of CSS properties only if a certain condition is true.
+
+Example
+If the browser window is 600px or smaller, the background color will be lightblue:
+
+@media  screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+-> when screen is broking at 479px, then we can add media query there like-
+
+@media screen and (max-width:479px)
+{
+.finishAlign
+{
+margin-left:0px;
+margin-top:4px;
+}
+}
+THis class will be added to the div tag of the html.
+
+
+					scss
+
+SCSS is a popular preprocessor too for CSS that provides additional highly useful features.
+ The syntax originally was derived from SASS which is a similar tool.
+ In addition to its useful features, SCSS has seen wide adoption because .scss files work with CSS styles too.
+
+Nested Selectors->
+scss allows us to nest selectors.
+
+e,g---
+ #sidebar {
+        position: fixed;
+        height: 100%;
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                background-color: #F2F2F2;
+                color: #404040;
+            }
+        }
+    } 
+
+This will compile to-
+
+    #sidebar {
+        position: fixed;
+        height: 100%; }
+    #sidebar ul {
+        list-style-type: none;
+        padding: 0; }
+    #sidebar ul li {
+        background-color: #F2F2F2;
+        color: #404040; }
+
+You can also nest media queries too.
+
+     #sidebar {
+        position: fixed;
+        height: 100%;
+
+        @media (max-width:768px) {
+            left: -9999;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    } 
+This will compile to
+
+    #sidebar {
+        position: fixed;
+        height: 100%; }
+    @media (max-width: 768px) {
+        #sidebar {
+            left: -9999; } }
+    #sidebar ul {
+        list-style-type: none;
+        padding: 0; }
+
+The Ampersand in Nesting->
+
+Oftentimes in css some of our styles may be extends versions of others. For example
+
+.header {
+  width: 50%;
+  margin: 0 auto;
+}
+.header-link {
+  color: blue;
+}
+SCSS allows us to nest selectors that repeat the same root text like the example above. 
+We can rewrite it for SCSS by using a nested selector
+
+.header {
+  width: 50%;
+  margin: 0 auto;
+
+  &-link {
+    color: blue;
+  }
+}
+e.g-
+
+.header {
+  width: 50%;
+  margin: 0 auto;
+}
+.header-link {
+  color: blue;
+}
+
+SCSS allows us to nest selectors that repeat the same root text like the example above. 
+We can rewrite it for SCSS by using a nested selector
+
+.header {
+  width: 50%;
+  margin: 0 auto;
+
+  &-link {
+    color: blue;
+  }
+}
+SCSS is a preprocessor, meaning that it will read the second example and compile it into the first example.
+The & symbol gets replaced with the name of the current selector. We can even nest selectors as deep as needed,
+ though 3 levels is usually enough.
+
+
+e.g->
+
+.list {
+       background-color: white;
+       color: #404040;
+
+       /* Pseudo-class */
+       &:hover {
+           background-color: blue; 
+           color: white
+       }
+
+       /* Pseudo-element */
+       &:before {
+            content: "List ";
+       }  
+
+       /* Placing selectors side by side */
+       &.active {
+            border-left: 3px solid blue;
+            color: blue;
+       }
+   }
+
+					“scss & hover” 
+ .class {
+    &:hover {
+      opacity:2px;
+      color: red;
+      background:yellow;
+    }
+    
+    
+}
+
+						Variables in scss
+Variables are a way to store information that you can re-use later.
+scss syntax-
+
+$myFont: Helvetica, sans-serif;
+$myColor: red;
+$myFontSize: 18px;
+$myWidth: 680px;
+
+body {
+  font-family: $myFont;
+  font-size: $myFontSize;
+  color: $myColor;
+}
+
+#container {
+  width: $myWidth;
+}
+
+						Mixins
+The @mixin directive lets you create CSS code that is to be reused throughout the website.
+The following example creates a mixin named "important-text":
+
+SCSS Syntax:
+
+@mixin important-text {
+  color: red;
+  font-size: 25px;
+  font-weight: bold;
+  border: 1px solid blue;
+}
+						Using a Mixin
+
+So, to include the important-text mixin created above:
+
+When we include the mixin in our application than we can use the privilleage of the mixin elements.
+
+SCSS Syntax:
+
+.danger {
+  @include important-text;
+  background-color: green;
+}
+					Passing Variables to a Mixin
+
+Mixins accept arguments. This way you can pass variables to a mixin.This may used as function 
+
+Here is how to define a mixin with arguments:
+
+SCSS Syntax:
+
+/* Define mixin with two arguments */
+@mixin bordered($color, $width) {
+  border: $width solid $color;
+}
+
+.myArticle {
+  @include bordered(blue, 1px);  // Call mixin with two values
+}
+
+.myNotes {
+  @include bordered(red, 2px); // Call mixin with two values
+}
+
+					Using a Mixin For Vendor Prefixes
+
+Another good use of a mixin is for vendor prefixes.
+
+Here is an example for transform:
+
+SCSS Syntax:
+
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+
+.myBox {
+  @include transform(rotate(20deg));
+}
+THis component will be rotate to 20 degree where myb0x class is used.
+
+After compilation, the CSS will look like this:
+
+CSS Output:
+
+.myBox {
+  -webkit-transform: rotate(20deg);
+  -ms-transform: rotate(20deg);
+  transform: rotate(20deg);
+}
+
+						@extends directive in sass
+ 
+The @extend directive lets you share a set of CSS properties from one selector to another.
+
+The @extend directive is useful if you have almost identically styled elements that only differ in 
+some small details.
+
+e.g-
+SCSS Syntax:
+
+.button-basic  {
+  border: none;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-report  {
+  @extend .button-basic;
+  background-color: red;
+}
+
+.button-submit  {
+  @extend .button-basic;
+  background-color: green;
+  color: white;
+}
+
+				flex( ref link-https://developer.mozilla.org/en-US/docs/Web/CSS)
+The main idea behind the flex layout is to give the container the ability to alter its items’ width/height 
+(and order) to best fill the available space (mostly to accommodate to all kind of display devices and screen
+sizes). A flex container expands items to fill available free space or shrinks them to prevent overflow.
+
+Properties for the Parent
+(flex container)
+->						display
+
+This defines a flex container; inline or block depending on the given value. It enables a flex context 
+for all its direct children.
+
+.container {
+  display: flex; /* or inline-flex */
+}
+
+->						Flex-direction
+
+the four possible values of flex-direction being shown: top to bottom, bottom to top, right to left, and left to right
+
+This establishes the main-axis, thus defining the direction flex items are placed in the flex container.
+ Flexbox is (aside from optional wrapping) a single-direction layout concept.
+Think of flex items as primarily laying out either in horizontal rows or vertical columns.
+
+.container {
+  flex-direction: row | row-reverse | column | column-reverse;
+}
+elements are align into the | | | | for flex direction row.
+
+						flex-wrap
+->two rows of boxes, the first wrapping down onto the second
+By default, flex items will all try to fit onto one line. You can change that and allow the items to wrap as needed with this property.
+The flex-wrap CSS property sets whether flex items are forced onto one line or can wrap onto multiple lines.
+ If wrapping is allowed, it sets the direction that lines are stacked.
+
+.container {
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+nowrap (default): all flex items will be on one line  ||  ||  ||
+wrap: flex items will wrap onto multiple lines, from top to bottom. up to down boxes fit the container.
+wrap-reverse: flex items will wrap onto multiple lines from bottom to top.
+						flex-box
+The flex-basis CSS property sets the initial main size of a flex item. It sets the size of the content box 
+unless otherwise set with box-sizing.
+
+
+						flex-grow
+
+This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as
+ a proportion. It dictates what amount of the available space inside the flex container the item should take up.
+
+If all items have flex-grow set to 1, the remaining space in the container will be distributed equally to all
+ children. If one of the children has a value of 2, the remaining space would take up twice as much space as the 
+others (or it will try to, at least).
+
+.item {
+  flex-grow: 4; /* default 0 */
+}
+							flex-shrink
+The flex-shrink CSS property sets the flex shrink factor of a flex item. If the size of all flex items is larger
+ than the flex container,
+ items shrink to fit according 
+to flex-shrink.
+
+In use, flex-shrink is used alongside the other flex properties flex-grow and flex-basis, and normally defined
+ using the flex shorthand.
+							The float Property
+
+The float property is used for positioning and formatting content e.g. let an image float left to the text in a container.
+
+The float property can have one of the following values:
+
+left - The element floats to the left of its container
+right - The element floats to the right of its container
+none - The element does not float (will be displayed just where it occurs in the text). This is default
+inherit - The element inherits the float value of its parent
+In its simplest use, the float property can be used to wrap text around images.
+
+					Visiblity
+
+The visibility property specifies whether or not an element is visible.
+Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element
+ from the document layout!
+
+						text-overflow
+
+The text-overflow property specifies how overflowed content that is not displayed should be signaled to the user. It can be clipped, display an ellipsis (...), or display a custom string.
+
+Both of the following properties are required for text-overflow:
+
+white-space: nowrap;
+overflow: hidden;
+
+						Text-shadow
+The text-shadow property adds shadow to text.
+
+This property accepts a comma-separated list of shadows to be applied to the text.
+h1 {
+  text-shadow: 2px 2px #ff0000;
+}
+
+				text-indent
+div.a {
+  text-indent: 50px;
+}
+				white-space
+p.a {
+  white-space: nowrap;
+-Sequences of whitespace will collapse into a single whitespace.
+ Text will never wrap to the next line. The text continues on the same line until a <br> tag is encountered
+}
+
+p.b {
+  white-space: normal;
+Sequences of whitespace will collapse into a single whitespace. Text will wrap when necessary. This is default
+}
+
+p.c {
+  white-space: pre;
+ Whitespace is preserved by the browser. Text will only wrap on line breaks. Acts like the <pre> tag in HTML
+}
+  					word-spacing: normal
+
+					writing-mode
+  word-spacing: normal || vertical-rl
+
+					z-index
+The z-index property specifies the stack order of an element.
+
+An element with greater stack order is always in front of an element with a lower stack order.
+	
+Note: z-index only works on positioned elements (position: absolute, position: relative, position: fixed, 
+or position: sticky) and flex items (elements that are direct children of display:flex elements).
+if we have z-index -1 then we can have heading on the top of the image, like we can put as backgroud image 
+
+						Overflow
+The overflow property specifies what should happen if content overflows an element's box.
+
+This property specifies whether to clip content or to add scrollbars when an element's 
+content is too big to fit in a specified area.
+
+value		Description
+	
+visible		The overflow is not clipped. It renders outside the element's box. This is default	
+hidden		The overflow is clipped, and the rest of the content will be invisible	
+scroll		The overflow is clipped, but a scroll-bar is added to see the rest of the content	
+auto		If overflow is clipped, a scroll-bar should be added to see the rest of the content	
+initial		Sets this property to its default value. Read about initial	
+ 
+
+->Revision is till directives
+

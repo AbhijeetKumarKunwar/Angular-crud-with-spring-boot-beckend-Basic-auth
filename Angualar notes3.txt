@@ -1,0 +1,386 @@
+				
+							https communicATION IN ANGULAR
+What is Angular HttpClient?
+
+Front end applications, built using frameworks like Angular communicate with backend servers through REST APIs (which are based on the HTTP protocol)
+ using either the XMLHttpRequest interface or the fetch() API.
+
+Angular HttpClient makes use of the XMLHttpRequest interface that supports both modern and legacy browsers.
+
+The HttpClient is available from the @angular/common/http package and has a simplified API interface and powerful features such as easy testability,
+ typed request and response objects, request and response interceptors, reactive APIs with RxJS Observables, and streamlined error handling.
+
+
+							-Date format in Angular-
+Date object in the .ts file-myDate=new Date();
+in html we can print using Pipe - {{mydate | date:'d/MM/YYYY, hh:mm:ss'}}
+
+
+								semantic UI for angular
+
+
+->COpy the style tag in the index.html from officail page of semantic ui-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+then copy the code structure from the sematic ui-section->menu->view->statics for showing data in the card.
+-> for checkbox we can use-semantic ui-collections-form-checkbox...
+>for the check box if we not put id and for attribute in input and labal tag then we won't be able to select radio box, and we must have one name for de
+selecting other wile u slect one. and value attribute will help to get the value.it will be retrive when click on the checkbox
+
+
+
+
+							ng2-google- charts
+-> goto first link and copy the install command
+->npm i --save ng2-google-charts    -on the terminal
+->Refer the documentation for the uses
+import { Ng2GoogleChartsModule } from 'ng2-google-charts'; in app.module.ts file
+
+e,g->----------------------
+ public pieChart: GoogleChartInterface = {
+    chartType: 'PieChart',
+    
+  };
+
+This method is used for filled the table with data - and this mehod must be called after data populated from the service tothe application.
+
+ initChart()
+  {
+    let datatable=[]
+    datatable.push(['Country','Cases'])
+    this.globalData.forEach(ct=>
+      {
+        if(ct.confirmed>=400000)
+        datatable.push([ct.country,ct.confirmed])
+      })
+
+      this.pieChart={
+        chartType:'PieChart',
+        dataTable:datatable,
+        options:{
+              
+              height:450// This will increase the size of chart
+      }
+      }
+  }-----------------------------------
+							Why Angular HttpClient?
+
+The HttpClient builtin service provides many advantages to Angular developers:
+
+HttpClient makes it easy to send and process HTTP requests and responses,
+HttpClient has many builtin features for implementing test units,
+HttpClient makes use of RxJS Observables for handling asynchronous operations instead of Promises which simplify common web development tasks such as
+- The concelation of HTTP requests,
+- Listenning for the progression of file download and file upload operations,
+- Easy error handling,
+- Retrying failed HTTP requests, etc.
+
+							Creating Json server
+->First we need to create database.json file in the project folder, this file will work as the data base for out rest services.
+
+->Install the json server inside the  project folder-  C:\Users\839938\Angular projects\HttpExample>npm install -g json-server
+Since, JSON Server is provided as a NPM package. So, the installation of JSON Server can be done by using the npm (Node Package Manager)
+
+->start the json server-->json-server --watch database.json
+
+
+--> "json:server": "json-server --watch database.json", put this inside the packege.json file inside the script section for starto
+
+->Before working on Table, First we need to create a REST Service to access the data from db.json file. So, create a service named RestService below.
+
+--->ng generate service Rest
+
+After creating Rest Service, go to rest.service.ts file and implement getPosts() method to retrieve all users from json file. For impementing Rest 
+Servive which require URL to access, we first have to inject HTTP Service in our Rest Service. So for injecting HTTP Service inside Rest Service,
+ create private variable as http of HTTPClient in constructor of RestService.
+
+constructor(private http : HttpClient) { }
+ we also import the httpClient in the service class
+
+service class-> we consume the http in anoter component-
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Post } from './post';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RestService {
+ 
+  url:string;
+  
+  constructor(private http : HttpClient) { 
+    this.url = "http://localhost:3000/posts/";
+
+  }
+  getUsers()
+{
+    return this.http.get<Post[]>(this.url);
+    //THis will get the all post in the array of  post object
+}
+}
+Now, we need to call our getUsers() method that is defined in our Custom Rest Service so that we can show the data in table format.
+
+Since, we require the at the time the project loads intially. So for that we need to call getUsers() method inside ngOnInit() built
+ in method in Angular. Because ngOnInit() is called immediately as the project loads.
+
+So, call the getUsers() method using restService and subscribe() the Observable or response that we get from JSON Server and add all objects of type Users
+ class in users array.
+
+
+app.ts file->
+
+export class AppComponent {
+  title = 'HttpExample';
+  post:Post[]=[];
+  columns=['id','title','releaseDate'];
+  constructor(private rs : RestService) { 
+
+  }
+  ngOnInit():void{
+    this.rs.getUsers().subscribe
+    (
+      (response)=>
+      {
+        this.post=response;
+      },
+      (error)=>console.log(error)
+      )
+      
+    
+  }
+}
+
+
+But before we access HTTP Service, we also have to import it in our app.module.ts file. So first go to app.module.ts file and under imports array,
+ add HttpClientModule to it.
+
+Now, As we know that our database.json file contains posts Object and each Object consists of 3 properties. So for accessing them by JSON Server
+ we have to provide url to read that Object Users. The Url for Rest Service to access file is :http://localhost:3000/posts
+->The following HTTP endpoints are created automatically by JSON server:
+
+GET    /Users
+GET    /Users/{id}
+POST   /Users
+PUT    /Users/{id}
+PATCH  /Users/{id}
+DELETE /Users/{id}
+
+								Observables and subscribe
+
+
+Observable belongs to RxJs library, to perform asynchrounous programming in angular application we can use either observable or promise, when we
+send and recieve data over http we need to deal it asynchronously because featching data over Http may take time,
+THis is play role of observer btw request and server. wehen we get response from the server, it can be get to the application by subscribing it.
+
+->RxJs library is default in the angualr cli if not installed by this command-npm install rxjs --save;
+->To use observable in our angular applivation we need to import it
+import {Observable} from 'rxjs/Observable';
+
+->Angular HttpClient performs HTTP request for the given URL, HttpClient works with observable, find some of its methods-
+
+-get(url:string,options:{..}):Observable<any>//to get data
+-post(url:string,options:{..}):Observable<any>//to add data
+-put(url:string,options:{..}):Observable<any>//to update data
+-delete(url:string,options:{..}):Observable<any>// to delete data
+
+e,g-
+getBooksFormStre():Observable<Book[]>{
+return this.http.get<Book[]>(this.bookUrl);
+}
+getSoftBooks()
+{
+this.bookService.getBooksFromStore().subscribe(bookd=>this.softBooks=books);
+}
+
+
+								TO get data form jsonplaceholder
+
+first we create the service -ng g service user
+
+service class--
+
+import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+
+  constructor(private http:HttpClient) { }//we are injecting the httpClient object in http.
+  getData()
+  {
+    let url="http://jsonplaceholder.typicode.com/todos/";;
+    return this.http.get(url);//This will get all the data from that url.
+  }
+}
+
+->Import httpClientModule in app.module.ts file.
+
+app.component.ts-->
+
+export class AppComponent {
+  title = 'HttpCommunication';
+    data:any=[]
+  constructor(private Users  :UsersService)//we will inject the service object to access the methods
+  {
+this.Users.getData().subscribe( data=>
+  {
+    console.warn(data)
+  this.data=data;
+  
+  })
+
+  }
+when we call getData() of users service, it will be in the form of Obserable so , we need to  subscirbe .then we can access the data form from http.
+
+
+We can demostrate the advantage of the async methods i.e use of observables-
+
+ public getBeans()
+  {
+     this.http.get("http://localhost:8080/hello-world-bean").subscribe(
+       message=>this.printResponse(message)
+     );
+     console.log("Last line of the getBeans methods, this Line is after the print response call");
+  }
+  printResponse(message)
+  {
+    console.log(message);
+  }
+
+O/P-
+welcome-data.service.ts:18 Last line of the getBeans methods, this Line is after the print response call
+welcome-data.service.ts:22 {message: "hello world bean"}
+
+According to the sequance of the code , firstly the response of the Http method should be printed but it is  printing the last line 
+ of method first the resoponse
+, this is becasue when printResponse() will be called , the angular controll will not wait till the controll back after execution,
+ it will continue to execute
+ next lines when the response come then it would do the required task.
+
+For getting the customize Response type we can typescast using genric i.e-
+ this.http.get<HelloWorldBean>("http://localhost:8080/hello-world-bean").subscribe(message=>this.printResponse(message));
+This HelloWorldBean class must be defined and now we can accesses message like-message.message
+
+export class HelloWorldBean
+{
+
+  constructor(public message :string) {
+  
+    
+  }
+
+->now we can consume obserable into out .ts class and we assign value after subscribing the data.
+Message:string;
+
+  getWelcomeData()
+  {
+    this.service.getBeans().subscribe(
+      response=>this.Message=response.message
+    );
+    console.log(this.Message)
+
+  }
+
+->Handling the error coming from the rest services
+we have second parameter for error in the subscribe method, which is also a arrow methods and contains all type of error handling attribute.
+
+ getWelcomeData()
+  {
+    this.service.getBeans().subscribe(
+      response=>this.Message=response.message,error=>this.handleErrorResponse(error));
+    
+      
+    console.log(this.Message)
+
+  }
+  handleErrorResponse(error)
+ { 
+   console.log(error.error.message);
+   this.Message=error.error.message;
+   
+
+ }
+ 
+->Invoking the pathvariable method of rest service
+  public getBeanPathVariable(name)
+  { 
+    return this.http.get<HelloWorldBean>(`http://localhost:8080/hello-world/path-variable/${name}`);
+    
+    // console.log("Last line of the getBeans methods, this Line is after the print response call");
+  }
+In app.root file we will consume the data using subscibe it.
+
+
+---------------------------------------------------------------------------ngModel-----------------
+
+2315
+
+Yes, that's it. In the app.module.ts file, I just added:
+
+import { FormsModule } from '@angular/forms';
+
+[...]
+
+@NgModule({
+  imports: [
+    [...]
+    FormsModule
+  ],
+  [...]
+})
+->It is used to populate the input filed in the form before page loads.
+-> <input type="text" [(ngModel)]="todo.description" class="form-control" name="description" required >
+
+todo is the data present in the .ts file , which contains the data .ref-todos application
+-> NgModel is the combination of two things
+[ngModel]="todo.targateDate |date:'yyyy-MM-dd' " -->THis is the property binding 
+(ngModelChange)="todo.targateDate=$event " ->this is the event binding.
+
+Both conbinally adjusting the date format coming form java date class to dd mm yy format on the screen.
+
+
+--					----how to get the data from the url -----------
+
+import { ActivatedRoute } from '@angular/router';
+
+
+---dependecncy injuction--
+
+constructor(
+    private route:ActivatedRoute
+    ) { }
+
+
+ngOnInit(): void {
+    this.id=this.route.snapshot.paramMap.get('id');//getting the data from url/parameter
+     this.todo=new Todo(1,'',false,new Date());
+    this.service.getTodoById(this.id).subscribe(
+    response=>
+    {
+      this.todo=response;
+     
+    }
+    )
+  }
+------
+After dependency injection , of Router we call route the component having path-todo and id along with.
+
+_> route array-
+ path:'todo/:id',component:TodoComponent
+
+this.router.navigate(['todo',todo.id])//this will invoke the url of routing having this signature.
+
+--> send the object to update backedn from the input , input is populated by ngModel , so update in input will update the object too
+for the ref-onInit()-above 
+ saveTodo()
+  {
+    //when we are using the ngModel for populating data, if any update we do there in the input it will 
+    //autometically update in  object too, directly we can send this.todo object for update backend.
+
+    this.service.updateTodo(this.id,this.todo).subscribe(response=>
+      console.log(response)
+      )
+      this.router.navigate(['todos']);
+  }

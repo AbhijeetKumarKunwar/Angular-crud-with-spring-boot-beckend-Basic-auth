@@ -1,0 +1,1153 @@
+					Angular 11 
+
+				Angular Routing
+Router is mechanish used by angualr for navigating between page and displaying appropriated component/page on the browser.
+->Angualar is mainly focussed and good at the SPA(single page Archetecture), it loads a single Html page and  dynamically loads or update the partial 
+page as per user requrest and that is achieve  by the help of router.
+-> A set of partial page loading rule and urls is defined in router to render or load partial page based on user request.
+->> in Component based archetecture of angular 5 , angular looks into the route array, match the path as per the route req and loads the component
+ relevent to the rq route.
+->Angular provide very easy way to to work with the components, in the single page application it is essential to work twith multiple views/screens , 
+navigate and communicate b/w them ,Angular provide route service to to manage these all in very esasy way.
+->The application which uses router only has one router service instance, its a singleton. whenever or whereever you inject router service in application 
+,you will get access t othe same angular router service instance.
+
+-> Here we don't navigate to page we navigate to the component.
+->Angualr Router-is an officail angular routing library, written and maintained by the angular team .
+->Its javascript router implementation that's designed to work with angualr and is packaged as @angular/router.
+->Its take care of duties of the a Javascript router.
+->It acitvate all required angular components to compose a page when a user navigate to a certain Url.
+->It lets navate from one page to another without page reload.
+->It update the browser histroy so, the user can use the back and forward button when navigating back and forth.
+->Angualr ROuter
+*Redirect a url to another url
+*Resolve data before a page is displayed
+*run scripts when a page is activated or deactivated
+* Lazy load is part of the applicatoin
+
+				How Angular Roter works
+When we click on the link it is following the 7 steps-
+
+1.Parse the URL
+It parse the clicked url as a Url tree.
+
+2. Redirect
+Two kind of redirect 
+Local Redirect-when redirectTo does not start with a slash. replaces a single URL segment
+Absolute redirect-when redirectTo start with a slash, replaces the entire URL.
+-> Only one redirect is applied
+
+3.Identify the router state
+Angular router transverse the URL tree and matches the url segments against the paths configured in the router configuration.
+
+4.Guard-run guard
+It is work as guard for navigation like authentication,login,etc
+
+5. Resolve run-resoler
+It resolves the required datat for the router state.
+6.Activate
+It activates the angular components to display the page
+7. Manage
+Finally, when the new router satate has been displayed to the screen, Angular router listens for URL changes and state change.It managae navigation and 
+repeats the process when new url is clicked.
+
+				Router Outlet
+
+Router outlet is a dynamic component that the router uses to display the views based on the router navaigation, we can also say that it is the place
+ where all type of pages loaded according to clicked link.
+It is the router component
+<router-outlet> tells the router where to display routed views.
+
+<router-outlet></router-outlet>->Here navigating click will be loaded
+
+				Router-link
+
+Syntax- 
+Router Link-Client side(html page )-----------
+
+<h1>Angualr Router</h1>
+<div>
+<a [routerLink]="['/student']">Student</a>
+/div>
+When we click on the student component then this will be loaded on the router-outlet
+<router-outlet></router-outlet>
+
+Router link server side(on typescript file)-----------
+
+-> import {Router} form '@angular/router';
+constructor(private router:Router){}
+this.router.navigate(['/student',738762]);
+-Once we have router , navigation is quite simple, just call the navigation function of Router.This function takes an array, 
+first element of the array is string route and second is optional.
+
+_>Use the CLI to genrate it.
+-> ng genrate module aap-routing--flat--module=app
+--flat puts the file in src/app instead of its own folder
+--module=app tell the cli to register it in the imports arry of the Appmodule
+
+			We will practice client side routing here
+
+Create two component Stdudent and studentDetails
+update the app-routing.module.ts file,  route array for the navigation of the different component->
+we are setting path and component
+
+const routes: Routes = [
+  {
+  path:'student',component:StudentComponent
+  },
+  {
+    path:'studentDetails',component:StudentDetailsComponent
+  }
+];
+
+Now in app.component.html file set the Router link->
+
+<a [routerLink]="['/student']">student</a>
+<br>
+<a [routerLink]="['/studentDetails']">studentDetails</a>
+<div>
+    <router-outlet></router-outlet>
+
+When user clik on the eithr of the link that component will be loaded onto the router outlet.
+
+				server side routing
+for showig server side routing we need to create one button , when we clik on that button then we will show the routing functionality.
+app.component.html
+<button (click)="student()">Show student</button>
+component.ts file
+
+constructor(private route:Router)
+ {
+
+ }
+ student()
+ {
+   //here we can have if else conditions too
+   this.route.navigate(['/student']);
+ }
+for this we need to import Router and inject using constructor than we can use as above.
+</div>
+
+				Redirecting Routes
+
+e.g->
+    export const routes:Routes=[
+
+{path:"",redirectTo:'component-one',pathMatch:'full'}
+,{ path:'component-one',component:ComponentOne}
+]
+
+->The empty path is the first route represents the default path for the application, the place to go when the path in the url is empty, as it typicall
+ is at the start. THe default route redirects to the route for the  component-one url and there fore display the component one .
+
+-> The redirect route require a PathMatch property to tell the router how to match a URL to the path of a route, the router will through an error if u don't.
+
+we put this inside the Router array of app-route.module.ts file
+{
+    path:'',redirectTo:'student',pathMatch:'full'
+  },
+-> When application is lounched this redirectTo will load as default page.
+
+				Wildcard Route
+
+->Wildcard route to intercept invalid URLs and handle them gracefully.
+->It consist of two asterisk(**)
+->It matches Url, the router will select this route if it can't match a route earlier in the configuration .It  route can navigate to custom "404 Not Found" component or redirect to an existing route.
+-> {path:'**', component: PageNotFoundComponent}
+->if entire router configuration is processed and no match is found , router navigation fails and an erro is logged;
+->we do not put it to the first line of the configuration, it should be at the last in the route array.
+				Hand's on
+const routes: Routes = [
+  {
+    path:'',redirectTo:'student',pathMatch:'full'
+  },
+  {
+  path:'student',component:StudentComponent
+  },
+  {
+    path:'studentDetails',component:StudentDetailsComponent
+  },
+  {
+    path:'**',component:PageNotFoundComponent
+  }
+];
+
+When this link will be  clicked->
+<a [routerLink]="['/parentComponent']">parentComponent</a>
+ 
+we don't have any path for this so, wildcard route will be come to picture.
+
+						--Add background image/gif in the page-
+-->.bg-custom{
+    background: url(../assets/giphy11.gif);
+    width: 100%;
+    height: 270px;
+}//This can be called from the html tag.
+
+-->when select tag gives null in angular html, remove last three - "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true from angular compileroption of the tsconfig.json file. and add -"enableI18nLegacyMessageIdFormat": false,
+    "strictPropertyInitialization":false only.the null data issue will be sorted.
+
+	---------------------Add BootStrap in Angular project------------------------
+
+
+--> npm install bootstrap --save;
+ We can check in package.json file , the version of the bootsrap is included there.
+ex-"bootstrap": "^4.6.0",-major.minor.patch
+-->Node_module->bootStrap->dis->css->bootstrap files are there which can be impoerted to the global css file ->style.css
+e.g- @import "~bootstrap/dist/css/bootstrap.css"-here '~' represent node_module file
+
+Now we can enjoy the beauti of the bootstrap.
+
+				Angualr form
+1.Template driven form
+2.Model driven forms(reactive forms)
+
+1.Template Driven- Template driven forms are forms where we write logic, validations, controls etc, in the template part of the code (html code). 
+The template is responsible for setting up the form, the validation, control, group etc. Template driven forms are suitable for simple scenarios,
+ uses two way data binding using the [(NgModel)] syntax, easier to use though unit testing might be a challenge.
+
+->It is basically used for low or small reaquirement form .
+To use the template driven form, we need to explicitly import {FormsModule} in our application module from @angular/forms
+
+<input type="text" ngModel name="firstName">
+
+feature->
+Easy to use
+sutiable to simple scenario
+similer to angular 1.0
+Two way data binding using NgModel syntax
+minimal component code
+unit tsting is challenging
+
+					-----NgModel control ----
+
+NgModel is a directive that creates the FormControl instance from a domain model and binds it to a form control element. It uses two kinds of binding:
+ Property binding.
+->When we add than all the inputs are registred in the NgForm.
+->It creates the instance of the formControl class form Domain model and assigns it to the form control element. This keep the tracks of user information
+ and the state and validation status of the form control.
+
+For using this we must use name attribute to the tag.
+<form>
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input id="first_name" ngModel  type="text" class="form-control"  name="firstname"    #firstName="ngModel" (change)="log(firstName)">
+    </div>
+    <div class="form-group">
+        <label for="comment">Write Comment</label>
+        <textarea ngModel name="comment" cols="30" rows="10" id="comment" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+_> Inside the.ts file we wil print the firstName parameter and open the consle inside the inspect, this will be show all the control over the component
+ like its touched or not, value changed , validation,error etc
+		      
+				Adding validation in form-control
+
+
+<div class="form-group">
+        <label for="first_name">First Name</label>
+        <input required id="first_name" ngModel  type="text" class="form-control" name="firstname" #firstName="ngModel" (change)="log(firstName)">
+        <div class="alert alert-danger" *ngIf=" firstName.touched && !firstName.valid"> First Name is required</div>
+--> This will genrate warnign when input tab is touched and did not filled data.
+-->valid is false when we don't wite anything inside the text box.
+    </div>
+-> we have many attributes of input tag like--> required, minlength,maxlength, pattern etc
+
+When we have multiple validation than we do not use single div to show the erro we do so->
+
+<div class="form-group">
+        	<label for="first_name">First Name</label>
+       	 <input minlength="2"
+	 maxlength="10"
+	 required id="first_name" 
+	pattern="ab" 
+	ngModel
+ 	 type="text" 
+	class="form-control" 
+	name="firstname
+	" #firstName="ngModel" 
+	(change)="log(firstName)">
+        <div class="alert alert-danger" *ngIf=" firstName.touched && !firstName.valid"> 
+            <div *ngIf="firstName.errors.required">First Name is requried</div>
+            <div *ngIf="firstName.errors.minlength">First Name min-length is required</div>
+        <div *ngIf="firstName.errors.pattern">The patten is required</div>
+        </div>
+-> we can also get value of the errors like required length form error object , we can check it from inspect console.
+
+				--Styling Invalid Input Field--
+
+when we facing errors than inspact the page we wll find additional class is added dynamically with the ng-control are ng-invalid,ng-touched,ng-dirty etc.
+we can used these class to put style in the css.
+style.css
+ .form-control.ng-touched.ng-invalid
+{
+border:2px solid red;
+}
+
+			------------	ngForm controll---
+
+->It is the default to the <form> tag , it is having output prpertity "ngSubmit" , which is use to raise the event, we can create one template variable
+ and hold the refrance
+of the form variable and used for calling method , if we inspect we will find different properties like ngModel  here too.
+-> Two main functionalities offered by NgForm and NgModel are the permission to retirve all the value of the controll associated with the form and
+ retirving the overall  state of the controls in the form.
+_>To expose NgForm in the application, we have used the follwoing code sinpped->
+
+<form #f="ngForm" (ngSubmit)="submit(f)">
+
+-> In  this we are exporting the ngform value in the local variable in the in "f", now , The question arises, wether or not we need to use the local 
+variale . well , the answe is no , .we are exporting the ngForm in the local variable just  to use some of the proerties of the form and these proeprties
+ are-
+
+1.f.value-It gives the object containg values of the field in the form.
+2.f.valid-This gives us the value indicating if the form is valid or not.if it is valid than vlaue is true or false.
+3.f.touched-This returns true or false, when when one the field of the form is entered or toched.
+
+When we use <form> with Angular, it will automatically create a ngForm directive for that form. This directive will provide additional controls to 
+track the state of the form. It has all the controls which we created for other fields using the ngModel directive. We can check the validity of the
+ form using this form directive. If all the fields in a form are valid, then the form is considered valid.
+ngForm
+
+Angular by default add ngForm directive with <form> tag. It has all the child form controls registered with itself. To register every form control 
+within this, we need to use fields with the name attribute. We will use a template variable to get a reference. 
+
+ex-html----------------------------ngForm example------------(import {NgForm} from '@angular/forms';)
+
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <form #regForm='ngForm' (ngSubmit)='Register(regForm)'>
+                <h2 class="text-centre">Registration Page</h2>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="First name" name="firstName" ngModel>
+
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Last name" name="lastName" ngModel>
+
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Email " name="email" ngModel>
+
+                </div>
+                <br>
+                <div class="align-centre">
+                    <button type="submit" class="btn-primary" id="register">Register</button>
+                </div>
+               
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+---.ts file
+Register(regForm:any)
+ {
+   //These data can be used for sending to db or services
+  var name=regForm.value.firstName;
+  var email=regForm.value.email;
+  var lastName=regForm.value.lastName;
+   console.log(regForm);
+   console.log(name);
+   console.log(email);
+
+ }
+
+				Validaton of Temlate driven form
+
+The following are the classes which will be attached whenever the state is changed-
+* ng-touched-controls have been visited.
+*ng-untouched-control has not been visited
+*ng-dirty-control value has been changed.
+*ng-pristine-control value has not been changed
+*ng-valid-control values are valid
+*ng-invalid-control values are invalid.
+e.g- 
+	input.ng-invalid.ng-touched
+	{
+	border-color:red;
+	}
+->If we talk about the validation we can have basic example with the above form , like we will put required attribute to the each of the input tag
+ and in the button we will validate the form.
+
+<button type="submit" class="btn-primary" id="register" [disabled]="!regForm.valid">Register</button>
+If all the validaton of the form is good than the register button will be enable and form will be submitted.
+The ngForm variable contains all the required validaton.
+->If we want to give custom message to the validation than we can use template varibale which contains the ngModel .
+e.g-
+ <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email " name="email" ngModel required #emai="ngModel">
+                    <div *ngIf="emai.touched && !emai.valid">Please write email..!</div>
+                </div>
+
+							2.Model driven Forms(Reactive forms)->
+
+In this form we creae model in .ts file and it is responsible for handling all the user intrections/validation. for this we need to create" model using 
+angular's inbuilt classes like formGroup and formControl" and then we need to bind it to the HTML form.
+This approch is favour the explicit mangement of data between ui and model. we create the ree of angular form controls and bind them in the native form
+ controls.
+
+-> import ReactiveFormsModule in out app.module.ts file
+Feature
+more flexible but need more practice
+handle any complex scenario
+NO data binding is done
+more component code and less html markup
+
+Lets come back to app.component.ts file we need to import three libraries-
+
+-import {FormGroup, FormControl, FormBuilder} form '@angular/forms'
+and ReactiveFormModule in app.module file
+
+* FormControl-It tracks the value of the controls and validates the individual control in the form.
+* FormGroup-Tracks the validity  and state of the group of  FormControls instance or moreover, we can say the formgroup to be a collection of FormControls.
+*FormBuilder-This helps us to devlop the forms along with their initial value and validaton.
+
+Lets make one form to understand this ->
+Here we need to care abt some new things....
+1.we assign the variable to the "formGroup"  and same variable is declered inside our control class which will be of Type formGroup. This variable contains the group of all controll on our form.This variable is also passed to our even method as argument. like in template driven we used to assign ngForm to the varible.
+
+2. Another important point we need to take care is , we integrate out controll to the html tag using attribute "formControlName" and this name is same as the name given to the control inside the component file. so that they will be mapped autometically by name.
+
+html form->
+
+<h1>
+    Welcome to {{title}}
+</h1>
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <form [formGroup]='signUpForm' (ngSubmit)='postData(signUpForm)'>
+                <h2 class="text-centre">Registration Page</h2>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" formControlName="fName" placeholder="First name" required   >
+
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Last name" formControlName="lName" required>
+
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email " formControlName="EmailId">
+                    
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="password" formControlName="UserPassword" required>
+
+                </div>
+                <div class="align-centre">
+                    <button type="submit" class="btn-primary" value="post data" >Register</button>
+                </div>
+               
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+					the controll class(.ts class)
+
+_>signUpForm.controls.fName.value -data will be collectd for our services.
+-formcontrol is equal to the number of field in the form and when it is more than one than we declar inside the formgrop.
+->when we use formBuilder than we can also use [] at the creation of the FormControl() refrance.
+->when we don't want to create object of formCOntrol using new keyword than we can use formBuilder.
+
+export class AppComponent {
+ title="todos";
+ signUpForm:FormGroup;
+ //This will hold all the controlls of our form.
+ constructor(private formBuilder:FormBuilder)
+ {
+//formBuilder group method will make the formGroup of form control together.
+   this.signUpForm=formBuilder.group({
+     fName:new FormControl(),
+     lName:new FormControl(),
+     EmailId:new FormControl(),
+     UserPassword:new FormControl()
+
+
+
+   });
+ }				Individual form Data
+ postData(signUpForm:any)
+ {
+ **->signUpForm.controls.fName.value , this way we collect data of form individually 
+this.signUpForm.get('fName').value; specific value we get
+this.signUpForm.value-form value we get
+  
+  console.log(signUpForm.controls.fName.value);
+  console.log(signUpForm.controls.lName.value);
+  console.log(signUpForm.controls.UserPassword.value);
+ 
+   console.log(signUpForm.controls);
+ }
+				Validation in Reactive form
+When we do fName:new FormControl(), The first argument of the FormControl is the initial value and the second value is the validaton that we can add there.
+
+e.g-> fName:[",validators.compose([validators.requred, validators.maxLength(15), validators.minLength(1)]))].
+-> we can have multiple validators using the squre bracket.
+
+e.g- here signUpForm is the formGroup variable.
+
+ <div class="form-group">
+                    <input type="text" class="form-control" formControlName="fName" placeholder="First name"    >
+                    <span *ngIf="signUpForm.get('fName').invalid && signUpForm.get('fName').touched">First Name is required</span>
+                </div>
+
+		 		 multiple custom message
+get()-> this mthd will help to get elements of the form
+form-it is the formGroup refrance
+ <div class="alert alert-danger " *ngIf="form.get('username').touched && form.get('username').invalid">
+            <div *ngIf="form.get('username').errors.required">Username is requried</div>
+            <div *ngIf="form.get('username').errors.minlength">Mininum of length 3 is requried</div>
+        </div>
+
+				Form Builder
+
+Its an abstraction layer which makes it easy to design and build our forms
+It used when complex form statructe
+add/remove
+Array of the form control
+It has three important-
+formGroup
+formArray
+FormControl
+we do not use formcontrol seprate here .
+THis will break the code into smaller ones
+
+
+			
+				Custom Validators function
+
+			FormGroup Get value and reset()
+->To get the value of form control named as name after form submit, we need to write the code as below -
+this.userFOrm.get('name').value 
+-> we want to get all values of the form then we can write code as given -
+this.userForm.value
+->To reset the form we need to call reset() mehtod on FOrmGroup instance. suppose userForm is the instance of FormGroup then we create a method as given bleow.
+tis.userFOrm.reset()-the form fields will be cleared.
+
+-> we can reset as well as set the default value to the the form as required like-
+         <button type="button" class="btn-primary" value="" (click)="resetForm()" >reset Form</button>
+->.ts file
+resetForm(){
+userFOrm.reset(
+{
+name:'Abhi',
+age:20
+}
+);
+}
+				e.g of validation-
+constructor(private fb:FormBuilder)
+  {
+    /* without form builder 
+    this.addLoanTypeForm=new FormGroup({
+      'loanName':new FormControl(),
+      'loanDescription':new FormControl(),
+      'loanType':new FormControl()
+    });*/
+with form builder-
+    this.addLoanTypeForm=this.fb.group({
+      'loanName':new FormControl('',[Validators.required,Validators.minLength(2)]),
+      'loanDescription':new FormControl('',[Validators.required]),
+      'loanType':new FormControl('',Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ]))
+
+    });
+
+			--setValue() and patchValue()--
+->both methods are used to sets the value in the form control of formGroup.
+setValue sets the value in the each and every form control in the form group we can not omit any form control in setValue but in the patchvalue we can omit form control which we don't want to assign set any value .BOth are used in the same contaxt.
+> it is mandatory to mention all form controls in setvalue() otherwise it will throw error.
+> it is not mendatory in the patchvalue.
+
+e.g-setValue-
+we will make one button to page to fill datat-
+                    <button type="button" class="btn-primary" value="" (click)="fillDataForm()" >set Data Form</button>
+
+.ts how to fill data to the controls-
+
+fillDataForm()
+ {
+   this.signUpForm.setValue({
+     "fName":"Abhijeet",
+     "lName":"kunwar",
+     "EmailId":"kumar1009@gmail.com",
+     "UserPassword":"Kunear#1837"
+
+   });
+When above button is clicked then these data will be populated to the form controls.
+_> when we skip any one of control we will get error , whenwe use .pathValue() than we can updae selective one.
+			--ValueChanges() and StatusChanges()--
+
+				ValueChanges()
+(every press is tracked and get in .ts file)
+* ValueChanges and statuschanges are properties of FOrmCOntrol,FormArray,and FOrmGroup classes. THese both returns Observable instance and we can subscribe them to get data.
+
+->ValueChanges is a property of AbstractControl that emits an event every time when the value of the control changes either using UI or Programetically. valueChange property is available in FormControl, FormArray and FormGroup classes because they inherit AbstractControl class.
+ex->
+ngOnInit()
+ {
+   this.signUpForm.get('fName')?.valueChanges.subscribe(
+     uName=>{
+       console.log('the value changes-'+uName);
+     }
+   )
+ }
+we can see the output how the controll is being tracked in control file-
+.........
+the value changes-abhij
+ 
+the value changes-abhije
+
+ the value changes-abhijee
+ 
+the value changes-abhijeet
+-> If we want to get value of the form togeter than we will create on class which contain all controll varible when we will subscube that than we will get values.
+e.g->this.signUpForms.valueChanges.subscribe((user:formSingUp)=>
+console.log(''fname changes-'+user.fname);
+console.log('lname changes-"+user.lname);
+....}
+);
+
+				statusChanges()
+It emits property of AbstractControl that emits an event every time when the validation status of the control is recalulated.This property avail in FormControl,FormArray,and FormGroup calsess becz they inherit AbstractControl.
+
+If we subscribe this of a formControl instance, we get leatest validation status of that control whenever the validation status is recalculated for the control.
+-> we will get status of the each and every press of the key and it update till the validation fullfills.
+ngOnInit()
+ {
+   this.signUpForm.get('fName')?.statusChanges.subscribe(
+     status=>{
+       console.log('fName validation status-'+status);
+     }
+   )
+ }
+ 
+when we put fname-a
+O/p-fName validation status-VALID
+when we remove all 
+O/p-fName validation status-INVALID
+			
+				Status for full form
+ngOnInit()
+ {
+   this.signUpForm..statusChanges.subscribe(
+     status=>{
+       console.log('fName validation status-'+status);
+     }
+   )
+ }
+=>This will be invalid untill all validaton fullfills.
+
+				FormArray
+
+It aggregate the the values of each child FormControl into an array. It calculates its status by reducing the statuses of its childeren, for e.g- IF one of the controls in a formArray is invalid, the entire formArray is invalid.
+
+Npm package @angular/forms
+Module  import [formArray] form  @angualr/forms.
+
+e.g-
+
+ ngOnInit()
+ {
+ const arr=new FormArray([
+    new FormControl('abhijeet'),
+    new FormControl("ram")
+   
+  ]);
+			setValue() and patchValue() in formArray
+
+	//we have use setValue() and patchValue() method to set datat into the controls
+arr.setValues(['abjeet','remau']);
+  console.log(arr.value);
+  console.log(arr.status);
+ }
+			Reset in FormArray
+arr.reset(['firstName','lastNae']);
+
+				Nested FormArray
+It come to picture when we have group of formcontrol but u r not sure how many there will be, formArray will allow u to create new form controll dynamically.
+->Access the array-You can access the associated FormArray using the get m ethod ont he parent FOrmGroup.
+e.g-> this.form.get('cities')
+- Get the value : the value property is alwasy synced and available on the formArray.
+-set the value: You can set an initial value for each child control when instantiating the FormArray, or uou can set the value programetically later using setvalue or patch value metohd.
+
+->add New control-this.form.get('cities').push(new FormCOntrol());
+
+		we will create form arry , which will add dynamic formControl
+
+ui-
+<h1>
+    Welcome to {{title}}
+</h1>
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <form [formGroup]="form" (ngSubmit)='onSubmit()'>
+                <div formArrayName="contactNo">
+                    <div *ngFor="let contact of form.controls.contactNo.controls;index as i">
+                        <input [formControlName]="i" placeholder="contact no">
+                    </div>
+                </div>
+               <button>submit</button>
+            </form>
+<button (click)="addContactNo()">Add new Contatct no</button>
+<button (click)="setPreset()">Set setPreset</button>
+        </div>
+
+    </div>
+</div>
+
+.ts
+-
+export class AppComponent {
+ title="todos";
+ //formGroup:FormGroup;
+ form:any;
+ 
+ constructor()
+ {
+   
+ }
+ ngOnInit():void
+ {
+ this.form=new FormGroup({
+  contactNo:new FormArray([
+     new FormControl("abhijeet"),
+     new FormControl("aramesh")
+   ]),
+ })
+ }
+ addContactNo()
+ {
+   this.form.get('contactNo').push(new FormControl());
+ }
+ onSubmit()
+ {
+   console.log(this.form.get('contactNo').value);
+   console.log(this.form.value);
+ }
+ setPreset()
+ {
+   this.form.get('contactNo').patchValue(['ravi','ramesh']);
+ }
+
+				->Iterating nested FormArray-
+
+<div formArrayName="contactNo">
+                    <div *ngFor="let contact of form.controls.contactNo.controls;index as i">
+                        <input [formControlName]="i" placeholder="contact no">
+                    </div>
+                </div>
+
+----------------------
+<div>
+  <input type="text" [formControl]="myForm.controls.firstName"/>
+  <input type="text" [formControl]="myForm.controls.lastName"/>
+  <input type="text" [formControl]="myForm.controls.email"/>
+  <input type="text" [formControl]="myForm.controls.title"/>
+</div>
+Is equivalent to:
+
+<div [formGroup]="myForm">
+  <input type="text" formControlName="firstName"/>
+  <input type="text" formControlName="lastName"/>
+  <input type="text" formControlName="email"/>
+  <input type="text" formControlName="title"/>
+</div>
+
+							Add  new Row Dynamically
+
+InFormArray-we can add any number of element or remove. ( steps by steps)
+
+
+Import FormArray
+To use FormArray, First, you need to import the FormArray from the Angular Forms Module.
+
+import { FormGroup, FormControl,FormArray, FormBuilder } from '@angular/forms'
+
+							Build a Form Model
+Build a form model skillsForm using the FormBuilder. Our Form has two fields. name of the person and his skills
+. Since the person can have more than one skill, we define skills as FormArray.
+
+ .ts file
+--
+  skillsForm: FormGroup;
+ 
+  constructor(private fb:FormBuilder) {
+ 
+    this.skillsForm = this.fb.group({
+      name: '',
+      skills: this.fb.array([]) ,
+    });
+  
+  }
+ Next, a getter method skills, which returns the skills FormArray from the skillsForm
+
+
+get skills() : FormArray {
+  return this.skillsForm.get("skills") as FormArray
+}
+ 
+ 
+						The skill FormGroup
+We need to capture two fields under each skill. Name of the skill & years of exp. Hence we create a FormGroup with two fields. The method newSkill creates a new FormGroup and returns it. Note that we won’t be able to assign a name to Form Group.
+
+newSkill(): FormGroup {
+   return this.fb.group({
+     skill: '',
+     exp: '',
+   })
+}
+
+						Dynamically adding skill
+Now, we need to add a new skill to the skills FormArray. Since it is an array we can use the push method to add the new skill using the the newSkill method. Note that newSkill() method returns a FormGroup. The name of the FormGroup is its Index in the FormArray.
+
+addSkills() {
+   this.skills.push(this.newSkill());
+}
+
+						Dynamically Removing Skill
+Use the removeAt method to remove the element from the skills FromArray.
+
+removeSkill(i:number) {
+  this.skills.removeAt(i);
+}
+
+							Template
+
+Now, it is time to build the Template. Use the [formGroup]="skillsForm" to bind the form to the skillsForm model.
+ The formControlName="name" directive binds the name input element to name property of the skillsForm
+
+<form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+ 
+  <p>
+    <label for="name">Name </label>
+    <input type="text" id="name" name="name" formControlName="name">
+  </p>
+ 
+ <p>
+    <button type="submit">Submit</button>
+  </p>
+ 
+</form>
+
+						Binding FormArray to Template
+
+We use the formArrayName directive to bind the skills form array to the div element. 
+Now the div and anything inside the div element is bound to the skills form array.
+
+<div formArrayName="skills">
+ 
+</div>
+
+Inside the div use ngFor to loop through each element of skills FormArray. let i=index will store the index value of the array in template local variable i. 
+We will make use of it to remove the element from the skills array.
+ 
+<div formArrayName="skills">
+  <div *ngFor="let skill of skills().controls; let i=index">
+ 
+  </div>
+</div>
+
+
+ Each element under the skills is a FormGroup. We do not have a name to the FormGroup. The Index of the element is automatically assigned as the name for the element.
+
+Hence we use the [formGroupName]="i" where i is the index of the FormArray to bind the FormGroup to the div element.
+
+<div formArrayName="skills">
+  <div *ngFor="let skill of skills().controls; let i=index">
+      <div [formGroupName]="i">
+      
+      </div>
+  </div>
+</div>
+
+Finally, we add the controls using the formControlName directive.
+ 
+  Skills:
+  <div formArrayName="skills">
+    <div *ngFor="let skill of skills().controls; let i=index">
+      <div [formGroupName]="i">
+        {{i}}
+        skill name :
+        <input type="text" formControlName="skill">
+        exp:
+        <input type="text" formControlName="exp">
+ 
+        <button (click)="removeSkill(i)">Remove</button>
+      </div>
+    </div>
+  </div>
+ 
+Also, pass the index i to removeSkill
+ 
+<button (click)="removeSkill(i)">Remove</button>
+ 
+Finally, call the addSkills method to add new skills.
+ 
+<p>
+  <button type="button" (click)="addSkills()">Add</button>
+</p>
+ 
+
+
+						final      .ts file example-----
+
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {FormGroup,FormControl,FormBuilder,NgForm, ControlContainer,Validators,FormArray} from "@angular/forms"
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent  {
+ 
+  title = 'Nested FormArray Example Add Form Fields Dynamically';
+ 
+  empForm:FormGroup;
+ 
+ 
+  constructor(private fb:FormBuilder) {
+ 
+    this.empForm=this.fb.group({
+      employees: this.fb.array([]) ,
+    })
+  }
+ 
+ 
+  employees(): FormArray {
+    return this.empForm.get("employees") as FormArray
+  }
+ 
+ 
+  newEmployee(): FormGroup {
+    return this.fb.group({
+      firstName: '',
+      lastName: '',
+      skills:this.fb.array([])
+    })
+  }
+ 
+ 
+  addEmployee() {
+    console.log("Adding a employee");
+    this.employees().push(this.newEmployee());
+  }
+ 
+ 
+  removeEmployee(empIndex:number) {
+    this.employees().removeAt(empIndex);
+  }
+ 
+ 
+  employeeSkills(empIndex:number) : FormArray {
+    return this.employees().at(empIndex).get("skills") as FormArray
+  }
+ 
+  newSkill(): FormGroup {
+    return this.fb.group({
+      skill: '',
+      exp: '',
+    })
+  }
+ 
+  addEmployeeSkill(empIndex:number) {
+    this.employeeSkills(empIndex).push(this.newSkill());
+  }
+ 
+  removeEmployeeSkill(empIndex:number,skillIndex:number) {
+    this.employeeSkills(empIndex).removeAt(skillIndex);
+  }
+ 
+  onSubmit() {
+    console.log(this.empForm.value);
+  }
+ 
+ 
+}
+ 
+ 
+export class country {
+  id: string;
+  name: string;
+ 
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+ 
+}
+  
+						.html file for the above code e.g=
+
+<h1>{{title}}</h1>
+
+<form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+ 
+  <div formArrayName="employees">
+ 
+    <div *ngFor="let employee of employees().controls; let empIndex=index">
+ 
+      <div [formGroupName]="empIndex" style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;">
+        {{empIndex}}
+        First Name :
+        <input type="text" formControlName="firstName">
+        Last Name:
+        <input type="text" formControlName="lastName">
+ 
+        <button (click)="removeEmployee(empIndex)">Remove</button>
+ 
+ 
+        <div formArrayName="skills">
+ 
+          <div *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index">
+ 
+ 
+ 
+            <div [formGroupName]="skillIndex">
+              {{skillIndex}}
+              Skill :
+              <input type="text" formControlName="skill">
+              Exp:
+              <input type="text" formControlName="exp">
+ 
+              <button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>
+ 
+            </div>
+ 
+          </div>
+          <button type="button" (click)="addEmployeeSkill(empIndex)">Add Skill</button>
+        </div>
+ 
+ 
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+ 
+</form>
+ 
+ 
+<p>
+  <button type="button" (click)="addEmployee()">Add Employee</button>
+</p>
+ 
+{{this.empForm.value | json}}
+ 
+
+
+						Example of Dynamic row add
+.html
+ 
+<div class="container">
+  <div class="form-group">
+    <form [formGroup]="dynamicRow" (ngSubmit)="onSubmit()">
+      <div formArrayName="details">
+      <div class="form-group" *ngFor="let details of detail().controls ; let detailsInd=index" >
+        <div [formGroupName]="detailsInd">
+
+        <div class="form-group">
+
+          <input type="text" formControlName="FirstName" placeholder="first Name">
+          <input type="text" formControlName="LastName" placeholder="LastName">
+          <input type="text" formControlName="Class" placeholder=" Class">
+          <input type="text" formControlName="RollNo" placeholder=" RollNo ">
+          <button type="button" class="btn btn-danger" (click)="removeDetails(detailsInd)"></button>
+        </div>
+      </div>
+        </div>
+
+      </div>
+      <button type="submit" class="btn btn-primary"> Submit</button>
+      
+    </form>
+    <button type="button" class="btn btn-primary" (click)="addDetails( )">add Details</button>
+     
+      
+  </div>
+</div>
+
+					 .ts file
+import { Component, OnInit } from '@angular/core';
+import {FormGroup,FormControl,FormBuilder,NgForm, ControlContainer,Validators,FormArray} from "@angular/forms"
+@Component({
+  selector: 'app-dynamic-rows',
+  templateUrl: './dynamic-rows.component.html',
+  styleUrls: ['./dynamic-rows.component.css']
+})
+export class DynamicRowsComponent   {
+
+  
+  title = 'FormArray Example in Angular Reactive forms';
+ 
+  dynamicRow: FormGroup;
+ 
+  constructor(private fb:FormBuilder) {
+ 
+    this.dynamicRow = this.fb.group({
+      details: this.fb.array([]) 
+    });
+   
+  
+  }
+ 
+   detail() : FormArray {
+    return this.dynamicRow.get("details") as FormArray
+  }
+ 
+  newDetails(): FormGroup {
+    return this.fb.group({
+      FirstName: '',
+      LastName: '',
+      Class:'',
+      RollNo:'',
+    })
+  }
+ 
+  addDetails() {
+this.detail().push(this.newDetails());
+  }
+ 
+  removeDetails(i:number) {
+    if(this.detail().length>1)
+    this.detail().removeAt(i);
+    else
+    alert("All data can not be deleted");
+  }
+ 
+  onSubmit() {
+    console.log(this.dynamicRow.value);
+  }
+ 
+}
+ 						Event emitter
+
+ 
+
+
+
+			Angualr Material 
+npm install --save @angular/material  @angular/cdk  @angular/animation
+cdk-component devlopment kit
+->npm install --save hammerjs.
